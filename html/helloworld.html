@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  </head>
+
+  <script>
+    $(document).ready(function() { 
+      $("div").click(function(event) { 
+        $.get("https://limz2m753j.execute-api.us-east-1.amazonaws.com/staging/tao").done(function(data) { 
+          //console.log(data);
+          $('#index').html(data.id); 
+          $('#stage').html(data.text); 
+        }); 
+      }); 
+    });
+  </script>
+
+  <body>
+    <div id="index">
+      Tao of Power
+    </div>
+    <pre id="stage">
+    </pre>
+  </body>
+</html>

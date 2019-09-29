@@ -3,7 +3,7 @@ package main
 // FIXME: Finish adding passages 28-81
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 	"math/rand"
 	"net/http"
@@ -17,6 +17,12 @@ import (
 var isbnRegexp = regexp.MustCompile(`[0-9]{3}\-[0-9]{10}`)
 var errorLogger = log.New(os.Stderr, "ERROR ", log.Llongfile)
 var debugLogger = log.New(os.Stderr, "DEBUG ", log.Llongfile)
+
+type Passage struct {
+	Id   int    `json:"id"`
+	Text string `json:"text"`
+	//Comment string `json:"comment"`
+}
 
 func router(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	switch req.HTTPMethod {
@@ -37,10 +43,15 @@ func show(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, er
 	//}
 	//	Body:       string(js),
 
-	return events.APIGatewayProxyResponse{
-		StatusCode: http.StatusOK,
-		Body:       fmt.Sprintf("%d. %s", index, passage),
-	}, nil
+	// Let's create the response we'll eventually send, being sure to have CORS headers in place
+	resp := events.APIGatewayProxyResponse{Headers: make(map[string]string)}
+	resp.Headers["Access-Control-Allow-Origin"] = "https://billzajac.com"
+	resp.StatusCode = http.StatusOK
+	p := Passage{index, passage}
+	b, _ := json.Marshal(p)
+	resp.Body = string(b)
+
+	return resp, nil
 }
 
 func serverError(err error) (events.APIGatewayProxyResponse, error) {

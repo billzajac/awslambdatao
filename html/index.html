@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div style="font-family:monospace;">
+      01101000 01100101 01101100 01101100 01101111<br \>
+      01110111 01101111 01110010 01101100 01100100
+    </div>
+
+    <div id="last" style=" display: none; font-family:monospace;">
+      hello<br \>
+      w<span>o</span>rld
+    </div>
+
+    <script>
+      // handle click and add class
+      $("span").bind('click', function(){
+          alert("try: helloworld.html");
+      });
+      $("body").click(function(){
+        $( "div" ).toggle();
+      });
+    </script>
+  </body>
+</html>
